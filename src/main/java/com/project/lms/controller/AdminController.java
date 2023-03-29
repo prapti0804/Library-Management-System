@@ -1,21 +1,27 @@
 package com.project.lms.controller;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.project.lms.dao.RoleRepository;
 import com.project.lms.dao.UsersRepository;
 import com.project.lms.entity.Role;
 import com.project.lms.entity.Users;
 import com.project.lms.exceptions.NotFoundException;
-import com.project.lms.models.AddUserRequest;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @CrossOrigin("http://localhost:4200/")
 @RestController
@@ -32,7 +38,7 @@ public class AdminController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/users")
-//    @PreAuthorize("hasRole('Admin')")
+
     public Users addUserByAdmin(@RequestBody Users user) {
     	Role role1= (Role) user.getRole().toArray()[0];
     	Role role = roleRepository.findByRoleName(role1.getRoleName());
@@ -41,11 +47,7 @@ public class AdminController {
         String password = user.getPassword();
         String encryptPassword = passwordEncoder.encode(password);
         user.setRole(setRole);
-//        Users user= new Users();
-//        user.setName(addUserRequest.getName());
-//        user.setPassword(encryptPassword);
-//        user.setRole(setRole);
-//        user.setUsername(addUserRequest.getUsername());
+
         user.setPassword(encryptPassword);
         usersRepository.save(user);
         return user;

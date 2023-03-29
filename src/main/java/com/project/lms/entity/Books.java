@@ -10,7 +10,9 @@ import javax.persistence.*;
 public class Books {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //for primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // auto increment
     Integer bookId;
     String bookName;
     String bookAuthor;
@@ -19,10 +21,12 @@ public class Books {
 
     public void borrowBook() {
         this.noOfCopies--;
+        //decrease no of copies when user borrow book
     }
 
     public void returnBook() {
         this.noOfCopies++;
+        //increase no of copies when user return book
     }
 
 }

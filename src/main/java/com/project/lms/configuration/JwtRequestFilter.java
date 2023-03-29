@@ -20,6 +20,8 @@ import java.io.IOException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
+	
+	//every request pass through it and check for jwt
 
     @Autowired
     private JwtUtil jwtUtil;
